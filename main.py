@@ -53,13 +53,9 @@ def get_selected_items_list(_items, max_area=9, sick='no'):
 
     n = len(value)
     res = table[n][max_area]
-    print("Итоговые очки выживания: ", res + 10)
+    max_result = res + 10
     a = max_area
     items_list = []
-
-    if res < 0:
-        print("Том умер")
-        return
 
     for i in range(n, 0, -1):
         if res <= 0:
@@ -71,6 +67,15 @@ def get_selected_items_list(_items, max_area=9, sick='no'):
             res -= value[i - 1]
             a -= area[i - 1]
 
+    for key, item in items.items():
+        if key not in items_list:
+            max_result -= item[1]
+
+    print("Итоговые очки выживания: ", max_result)
+
+    if max_result < 0:
+        print("Ты умер")
+        return
     k = 0
     # print(items_list)
     while len(items_list) or k < 1:
